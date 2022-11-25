@@ -1,0 +1,110 @@
+#include<bits/stdc++.h>
+// all library include
+using namespace std; 
+int main() 
+{ 
+    // declare file as txt
+    const string FILE_NAME = "midterm.txt";
+    // declare variable
+    int labs, total=0, average=0, count;
+    //dclare string store name of student and level 
+    string studentName, studentLevel, fileText;
+    ofstream outFS;
+    ifstream inFS;
+    
+    /////
+    cout << "Enter the number of students: ";
+    cin >> count;
+    cout << "Enter the number of labs: ";
+    cin >> labs;
+    // const declare not change it value
+    const int ELEM_COUNT = labs;
+    // declare fix size array
+     int scores[ELEM_COUNT];
+  
+    //declareing vector pair storing each student name and average number
+    vector<pair<string,int>> info;
+    //take loop for input and processing
+    for(int i=0;i<count;i++)
+    {
+      cout<<"Enter the name for student"<<i+1<<" ";
+      //enter studentName
+      cin>>studentName;
+      cout<<endl;
+      cout<<" Enter "<< labs << " scores for "<<studentName;
+      // enter student score 
+      for(int j=0;j<labs;j++)
+      {
+          // print some string text
+          cout<<"score "<<j+1<<": ";
+          cin>>scores[j];
+        
+      }
+      // display all scores
+      cout<<"The scores for " <<studentName<<" are";
+      for(int j=0;j<labs;j++){
+             total+=scores[j];
+             cout<<scores[j]<<" ";
+             //end enner loop
+      }
+      cout<<endl;
+      average=total/labs;
+      total=0;
+      //insert name and average mark of students in vector 
+      info.push_back({studentName,average});
+      //display average marks
+      cout<<"The average is: "<<average<<endl;
+      //then average to 0 for next student 
+      average=0;
+      
+      
+    }
+    //end outer loop
+    cout << "\nHere are your students ..." << endl;
+    
+    for(int i=0;i<info.size();i++)
+    {
+        //display results for student 
+        string name=info[i].first; //name of student 
+        int n=info[i].second;     // average scores
+        // display name and score 
+        cout<<info[i].first<<": "<<n;
+        // check student level
+        if(n>=90)
+        {
+            studentLevel="Excellent";
+            cout<<" Excellent";
+        }
+        else if(n>=80){
+            studentLevel="Very Good";
+            cout<<" Very good";
+        }
+        
+        cout<<endl;
+        ///////////////////////////////////////////////////  This is important lines for read and write file 
+        // write in modtern.txt file information of student 
+        ofstream fw("modtern.txt", std::ofstream::out);
+        //if open file then wrire details.
+        if(fw.is_open())
+        {
+            fw << name;
+            fw <<" : ";
+            fw <<n;
+            fw <<" ";
+            fw << studentLevel <<"\n";
+            fw.close();
+        }
+        // if not open file then display error message 
+        else{
+            cout<<"could not open file midterm.txt for reading"<<endl;
+            
+        }
+        
+        
+    }
+    
+   
+    cout << "Goodbye" << endl; 
+    return 0; 
+    
+} 
